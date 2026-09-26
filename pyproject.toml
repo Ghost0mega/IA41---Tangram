@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tangram"
+version = "0.1.0"
+dependencies = [
+    # Add your libraries here, e.g.:
+    # "numpy",
+    # "shapely",      # Great for 2D polygon geometry
+    # "matplotlib",   # Great for visual rendering
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.scripts]
+tangram = "tangram.main:main"
