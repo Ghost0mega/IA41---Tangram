@@ -1,5 +1,9 @@
 import math
-from tangram.models.geometry import rotation_around_center, translation
+from tangram.models.geometry import (
+    flip_horizontal_around_center,
+    rotation_around_center,
+    translation,
+)
 
 
 class Piece:
@@ -10,14 +14,13 @@ class Piece:
         vertices: list[tuple[float, float]],
         position: tuple[float, float] = (0.0, 0.0),
         rotation_deg: float = 0.0,
+        is_flipped: bool = False,
     ):
         self.name = name
-        # Sommets locaux (forme de base)
         self.local_vertices = vertices
-        # Ancrage (ex: position du premier sommet ou du centre)
         self.position = position
-        # Orientation en degrés
         self.rotation_deg = rotation_deg
+        self.is_flipped = is_flipped
 
     def get_center(self) -> tuple[float, float]:
         """Calcule le centre des sommets locaux."""
@@ -26,16 +29,24 @@ class Piece:
         mean_y = sum(y for x, y in self.local_vertices) / n
         return mean_x, mean_y
 
+    def flip(self):
+        """Bascule l'état miroir de la pièce."""
+        self.is_flipped = not self.is_flipped
+
     def get_world_vertices(self) -> list[tuple[float, float]]:
-        """Calcule les coordonnées réelles des sommets sur le plateau après rotation et translation."""
+        """Calcule les coordonnées réelles des sommets sur le plateau."""
         center = self.get_center()
         rad = math.radians(self.rotation_deg)
         world_vertices = []
 
         for vertex in self.local_vertices:
-            # 1. Rotation autour du centre local de la pièce
-            rx, ry = rotation_around_center(vertex, center, rad)
-            # 2. Translation vers la position absolue sur le plateau
+            pt = vertex
+
+            if self.is_flipped:
+                pt = flip_horizontal_around_center(pt, center)
+
+            rx, ry = rotation_around_center(pt, center, rad)
+
             wx, wy = translation((rx, ry), self.position)
             world_vertices.append((wx, wy))
 
