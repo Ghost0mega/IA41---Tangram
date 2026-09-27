@@ -1,4 +1,5 @@
 from tangram.models.piece import Piece
+from tangram.models.geometry import polygons_overlap
 
 
 class Board:
@@ -46,3 +47,19 @@ class Board:
     def get_all_world_vertices(self) -> dict[str, list[tuple[float, float]]]:
         """Retourne les coordonnées absolues (monde) de toutes les pièces posées."""
         return {name: piece.get_world_vertices() for name, piece in self.pieces.items()}
+
+    def check_collisions(self) -> list[tuple[str, str]]:
+        """Retourne la liste des pairs de pièces qui se chevauchent."""
+        collisions = []
+        piece_names = list(self.pieces.keys())
+        
+        for i in range(len(piece_names)):
+            for j in range(i + 1, len(piece_names)):
+                name1, name2 = piece_names[i], piece_names[j]
+                poly1 = self.pieces[name1].get_world_vertices()
+                poly2 = self.pieces[name2].get_world_vertices()
+                
+                if polygons_overlap(poly1, poly2):
+                    collisions.append((name1, name2))
+                    
+        return collisions

@@ -31,3 +31,37 @@ def flip_horizontal_around_center(point: tuple[float, float], center: tuple[floa
     cx, _ = center
     flipped_x = 2 * cx - x
     return flipped_x, y
+
+def _project_polygon(vertices: list[tuple[float, float]], axis: tuple[float, float]) -> tuple[float, float]:
+    """Projette un polygon sur un axe et retourne l'intervalle [min, max]."""
+    dots = [x * axis[0] + y * axis[1] for x, y in vertices]
+    return min(dots), max(dots)
+
+
+def polygons_overlap(poly1: list[tuple[float, float]], poly2: list[tuple[float, float]], epsilon: float = 1e-6) -> bool:
+    """Détermine si deux polygones convexes se chevauchent en utilisant SAT.
+    
+    epsilon permet d'ignorer le simple contact bord-à-bord (arêtes/sommets qui se touchent).
+    """
+    for poly in (poly1, poly2):
+        n = len(poly)
+        for i in range(n):
+            p1 = poly[i]
+            p2 = poly[(i + 1) % n]
+            
+            edge_x = p2[0] - p1[0]
+            edge_y = p2[1] - p1[1]
+            
+            axis = (-edge_y, edge_x)
+            length = math.hypot(axis[0], axis[1])
+            if length == 0:
+                continue
+            axis = (axis[0] / length, axis[1] / length)
+            
+            min1, max1 = _project_polygon(poly1, axis)
+            min2, max2 = _project_polygon(poly2, axis)
+            
+            if max1 <= min2 + epsilon or max2 <= min1 + epsilon:
+                return False
+                
+    return True
