@@ -34,6 +34,19 @@ class Board:
         piece = self.get_piece(name)
         piece.position = new_position
 
+    def place_piece_by_anchor(
+        self,
+        name: str,
+        target_pos: tuple[float, float],
+        rotation_deg: float = 0.0,
+        flip: bool = False,
+    ) -> None:
+        """Positionne une pièce en plaçant directement son 1er sommet local (index 0) à target_pos."""
+        piece = self.get_piece(name)
+        piece.position = target_pos
+        piece.rotation_deg = rotation_deg % 360.0
+        piece.is_flipped = flip
+
     def rotate_piece(self, name: str, angle_deg: float) -> None:
         """Pivote une pièce sur le plateau (ajoute à la rotation actuelle)."""
         piece = self.get_piece(name)

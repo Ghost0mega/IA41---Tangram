@@ -10,6 +10,8 @@ dependencies = [
     # "numpy",
     # "shapely",      # Great for 2D polygon geometry
     # "matplotlib",   # Great for visual rendering
+    "matplotlib>=3.11.2",
+    "pyqt6>=6.11.0",
 ]
 
 [project.optional-dependencies]

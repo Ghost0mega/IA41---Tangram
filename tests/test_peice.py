@@ -23,13 +23,21 @@ def test_piece_translation_only():
 def test_piece_rotation_90_degrees():
     vertices = [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)]
     square = Piece("carre", vertices, rotation_deg=90.0)
-    
+
     world_v = square.get_world_vertices()
-    assert world_v[0] == (2.0, 0.0)
+    # Le premier sommet sert de pivot, il reste donc à (0.0, 0.0)
+    assert world_v[0] == (0.0, 0.0)
+    assert world_v[1] == (0.0, 2.0)
+    assert world_v[2] == (-2.0, 2.0)
+    assert world_v[3] == (-2.0, 0.0)
+
 
 def test_piece_flip():
     vertices = [(0.0, 0.0), (2.0, 0.0), (0.0, 1.0)]
     piece = Piece("triangle", vertices, is_flipped=True)
-    
+
     world_v = piece.get_world_vertices()
-    assert round(world_v[0][0], 2) == 1.33
+    # Le flip autour du premier sommet (x = 0.0) garde l'abscisse du 1er point à 0.0
+    assert round(world_v[0][0], 2) == 0.0
+    assert round(world_v[1][0], 2) == -2.0
+    assert round(world_v[2][0], 2) == 0.0

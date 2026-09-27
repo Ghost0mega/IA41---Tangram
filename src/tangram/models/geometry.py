@@ -38,7 +38,7 @@ def _project_polygon(vertices: list[tuple[float, float]], axis: tuple[float, flo
     return min(dots), max(dots)
 
 
-def polygons_overlap(poly1: list[tuple[float, float]], poly2: list[tuple[float, float]], epsilon: float = 1e-6) -> bool:
+def polygons_overlap(poly1: list[tuple[float, float]], poly2: list[tuple[float, float]], epsilon: float = 1e-4) -> bool:
     """Détermine si deux polygones convexes se chevauchent en utilisant SAT.
     
     epsilon permet d'ignorer le simple contact bord-à-bord (arêtes/sommets qui se touchent).
