@@ -76,3 +76,7 @@ class Board:
                     collisions.append((name1, name2))
                     
         return collisions
+    
+    def has_collisions(self) -> bool:
+        """Retourne True si au moins deux pièces se chevauchent."""
+        return len(self.check_collisions()) > 0

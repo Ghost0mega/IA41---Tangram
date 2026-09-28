@@ -65,3 +65,13 @@ def polygons_overlap(poly1: list[tuple[float, float]], poly2: list[tuple[float, 
                 return False
                 
     return True
+
+def polygon_area(vertices: list[tuple[float, float]]) -> float:
+    """Calcule l'aire d'un polygone quelconque (formule du laceur)."""
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
