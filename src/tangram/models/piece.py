@@ -47,14 +47,11 @@ class Piece:
         for vertex in self.local_vertices:
             pt = vertex
 
-            # 1. Flip par rapport au pivot (premier point)
             if self.is_flipped:
                 pt = flip_horizontal_around_center(pt, pivot)
 
-            # 2. Rotation autour du pivot (premier point)
             rx, ry = rotation_around_center(pt, pivot, rad)
 
-            # 3. Translation : décaler le pivot pour qu'il arrive exactement à self.position
             # dx = pos_x - pivot_x, dy = pos_y - pivot_y
             dx = self.position[0] - pivot[0]
             dy = self.position[1] - pivot[1]

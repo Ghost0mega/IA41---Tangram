@@ -19,11 +19,11 @@ def rotation_around_center(point: tuple[float, float], center: tuple[float, floa
     x, y = point
     cx, cy = center
     
-    x_shifted, y_shifted = translation((x, y), (-cx, -cy))  # translate to origin
+    x_shifted, y_shifted = translation((x, y), (-cx, -cy))
     
-    x_rot, y_rot = rotation((x_shifted, y_shifted), angle_rad)  # rotate around origin
+    x_rot, y_rot = rotation((x_shifted, y_shifted), angle_rad)
     
-    return translation((x_rot, y_rot), (cx, cy))    # translate back to original position
+    return translation((x_rot, y_rot), (cx, cy))
 
 
 def flip_horizontal_around_center(point: tuple[float, float], center: tuple[float, float]) -> tuple[float, float]:

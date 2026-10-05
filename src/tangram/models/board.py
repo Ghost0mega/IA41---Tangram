@@ -5,7 +5,6 @@ from tangram.models.geometry import polygons_overlap
 class Board:
 
     def __init__(self, pieces: list[Piece] | None = None):
-        # Dictionnaire {nom_de_la_piece: instance_Piece} pour des accès rapides
         self.pieces: dict[str, Piece] = {}
         if pieces:
             for piece in pieces:

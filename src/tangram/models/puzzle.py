@@ -44,11 +44,9 @@ class Puzzle:
 
     def is_solved(self, board: Board, tolerance: float = 1e-3) -> bool:
         """Vérifie si le puzzle est totalement résolu."""
-        # 1. Pas de collision entre les pièces
         if board.has_collisions():
             return False
 
-        # 2. Vérifier que TOUS les sommets de TOUTES les pièces sont dans la silhouette
         for piece in board.pieces.values():
             for vertex in piece.get_world_vertices():
                 # Le sommet doit être dans au moins un des polygones cibles
@@ -59,7 +57,6 @@ class Puzzle:
                 if not in_target:
                     return False
 
-        # 3. Vérifier que l'aire totale des pièces correspond à l'aire de la cible
         total_pieces_area = sum(
             polygon_area(piece.get_world_vertices()) for piece in board.pieces.values()
         )
