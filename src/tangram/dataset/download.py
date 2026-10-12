@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+"""Module pour télécharger les fichiers SVG du dataset KiloGram.
+FYI : le dataset KiloGram est sous licence CC BY-NC-SA 4.0 (usage non commercial).
+Exemples d'utilisation :
+    python -m tangram.dataset.download -n 10
+    python -m tangram.dataset.download -n 20 --shuffle
+    python -m tangram.dataset.download --names page1-1 page2-189
+    python -m tangram.dataset.download -o data/puzzles_svg
+    
+La majorité du code de ce module à été générée par intelligence artificielle 
+"""
+
 import argparse
 import json
 import logging
