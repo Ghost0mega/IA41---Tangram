@@ -22,6 +22,7 @@ dev = [
 
 [project.scripts]
 tangram = "tangram.main:main"
+tangram-download = "tangram.dataset.download:main"
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]
